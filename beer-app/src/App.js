@@ -4,18 +4,16 @@ import logo from './logo.svg';
 import './App.css';
 import Beer from './Beer/Beer.js';
 import axios from 'axios';
+import Favourites from './Favourites/Favourites.js';
+import BeerList from './BeerList/BeerList';
+import FavouriteBeer from './FavouiteBeer/FavouriteBeer.js';
+import {BrowserRouter} from 'react-router-dom';
+import {Route, Link} from 'react-router-dom';
+import Details from './Details/Details'
 class App extends Component{
-  state = {
-    beers:[]
-  };
+  
    
-  componentDidMount(){
-    axios.get('https://api.punkapi.com/v2/beers')
-    .then(response =>{
-     this.setState({ beers: response.data});
-      console.log(response);
-    });
-  }
+  
   //https://api.punkapi.com/v2/beers
   //useState returns 2 arrays 1 the state and 2 a function that allows you to update the equals
   
@@ -56,12 +54,14 @@ class App extends Component{
       beers.splice(index,1);
       this.setState({beers: beers});
     }*/
+    
 
+    
 
  render() {
-   const beers = this.state.beers.map(beer =>{
-     return <Beer name={beer.name} />;
-   });
+   
+       //= <BeerList clicked = {this.addToFavourite(beer)} beer = {this.state.beers}/>
+       
    /*const style={
      backgroundColor: 'white',
     font: 'inherit',
@@ -82,12 +82,30 @@ class App extends Component{
   })}
        </div>
     );
+    
  <button style= {style}onClick={this.toggleBeer}>CLICK ME!</button>
    }*/
   return(
+    
     <div className="app">
-      {beers}
+      <header>
+        <nav className = "Fav">
+          <ul>
+            <li><Link to ="/">Home</Link></li>
+            <li><Link to="/details">details</Link></li>
+            
+          </ul>
+        </nav>
+      </header>
+      <Route path="/" exact component={BeerList} />
+      
+      
+      <Route path="/details:id" exact component={Details}/>
+        
+      
+      
     </div>
+ 
   );
   }
 }
