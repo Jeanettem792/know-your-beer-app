@@ -9,98 +9,46 @@ import BeerList from './BeerList/BeerList';
 import FavouriteBeer from './FavouiteBeer/FavouriteBeer.js';
 import {BrowserRouter} from 'react-router-dom';
 import {Route, Link} from 'react-router-dom';
-import Details from './Details/Details'
+import Details from './Details/Details';
+import Toolbar from './Toolbar/Toolbar';
 class App extends Component{
+  state={  
+      beers:[],
+      beerSelected: [],
+      selectedBeerId: null
+  };
   
-   
-  
-  //https://api.punkapi.com/v2/beers
-  //useState returns 2 arrays 1 the state and 2 a function that allows you to update the equals
-  
-
-     /*swithNaeHandler = (newName) => {
-      console.log('Was done');
-      
-        this.setState({
-      beers:[
-        {name: newName, age:'25' },
-        {name: 'Nat', age:'40' },
-        {name: 'Ben', age:'34' }
-    ]}) 
-  
-    }
-
-    nameChangedHandler =(event,id) =>{
-      const beerIndex =this.state.beers.findIndex(p =>{
-        return p.id === id;
-      })
-      const beer ={
-        ...this.state.beers[beerIndex]
-      } 
-
-      beer.name = event.target.value;
-      const beers = [...this.state.beers];
-      beers[beerIndex]=beer;
-      this.setState({
-        beers: [beers]
-      })
-    }
-    toggleBeer=()=>{
-      const doesshow = this.state.showBeer;
-      this.setState({showBeer:!doesshow})
-    }
-    deletePerson=(index)=>{
-      const beers = [...this.state.beers]//this.state.beers.slice();
-      beers.splice(index,1);
-      this.setState({beers: beers});
-    }*/
-    
-
-    
+  componentDidMount(){
+        if(this.state.beers.length<1){
+    axios.get('https://api.punkapi.com/v2/beers')
+    .then(response =>{
+      const beers = response.data.slice();
+   const updatedBeer = beers.map( beer =>{
+       return{
+         ...beer,
+         favourited:false,
+         buttonDes: "add"
+       }
+     });
+     this.setState({beers: updatedBeer});
+      console.log(response);
+    });}
+  }   
 
  render() {
    
-       //= <BeerList clicked = {this.addToFavourite(beer)} beer = {this.state.beers}/>
-       
-   /*const style={
-     backgroundColor: 'white',
-    font: 'inherit',
-     border: '1px solid blue',
-     padding: '8px',
-     cursor: 'pointer'
-   };
-  
+   console.log(this.props);
    
-   if(this.state.showBeer){
-    beers=(
-<div>
-  {this.state.beers.map((beer,index) =>{
-    return <Beer click={()=>this.deletePerson(index)} 
-    id={beer.id} 
-    />
-   //changed={(event)=>this.nameChangedHandler(event,beer.id)}/>
-  })}
-       </div>
-    );
-    
- <button style= {style}onClick={this.toggleBeer}>CLICK ME!</button>
-   }*/
+  
   return(
     
     <div className="app">
-      <header>
-        <nav className = "Fav">
-          <ul>
-            <li><Link to ="/">Home</Link></li>
-            <li><Link to="/details">details</Link></li>
-            
-          </ul>
-        </nav>
-      </header>
-      <Route path="/" exact component={BeerList} />
-      
-      
-      <Route path="/details:id" exact component={Details}/>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+      <Toolbar/>
+      <Route path="/" exact render={(props) =><BeerList {...props} beers={this.state.beers}/>}/> 
+     <div>
+      <Route path="/details/:id" exact component={Details}/>
+      </div>
         
       
       
@@ -109,19 +57,5 @@ class App extends Component{
   );
   }
 }
-
-/*
-
-
-state ={
-  beers:[
-      {nae: 'Jean', age:'25' },
-      {nae: 'Nat', age:'40' },
-      {nae: 'Ben', age:'34' }
-  ],
-  otherState: 'other state'
-}*/
-
-
 
 export default App;

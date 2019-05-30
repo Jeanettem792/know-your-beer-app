@@ -1,0 +1,16 @@
+.Fav{
+  height: 100%;
+  max-width: 150px;
+  box-shadow:0 2px 3px #ccc;
+  float: top left;
+  align-content: flex-start;
+  border: 1px black;
+  }
+
+  .favsBar{
+    border: 1px solid black;
+    box-shadow:0 2px 3px #ccc;
+ 
+    float: left;
+  
+  }

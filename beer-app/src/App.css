@@ -1,11 +1,17 @@
 .App {
   text-align: center;
 }
-.Fav{
+.Toolbar{
   border: 1px solid black;
   box-shadow:0 2px 3px #ccc;
 
   float: top left;
+
+}
+.Details{
+  width:50%;
+  border: 1px solid black;
+  box-shadow:0 2px 3px #ccc;
 }
 .Fav ul{
   list-style:none;
