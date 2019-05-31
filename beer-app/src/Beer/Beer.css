@@ -15,3 +15,11 @@ img{
 justify-content: center;
 text-align:center;
 }
+.BeerButton{
+  border-radius: 12px;
+  background-color: white;
+  box-shadow:0 2px 3px #ccc;
+  margin: 4px 2px;
+  cursor: pointer;
+
+}

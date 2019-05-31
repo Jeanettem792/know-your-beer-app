@@ -31,20 +31,20 @@ render(){
         beer = (
             <div>
                 <h1 className="BeerCenter">{this.state.fullDetails.name}</h1>
-                <img src={this.state.fullDetails.image_url}/>
+                <img alt="Beer bottle"src={this.state.fullDetails.image_url}/>
             
-                <h3 className="BeerCenter">{this.state.fullDetails.tagline}</h3>
+                <h2 className="BeerCenter">{this.state.fullDetails.tagline}</h2>
                 <ul>
                     <li>
-                        <h5>Brewed:</h5>  
+                        <h3>Brewed:</h3>  
                         {this.state.fullDetails.first_brewed}
                     </li>
                     <li>
-                        <h5>Description:</h5>
+                        <h3>Description:</h3>
                         {this.state.fullDetails.description}
                     </li>
                     <li>
-                        <h5>FullDetails:</h5>
+                        <h3>ph:</h3>
                         {this.state.fullDetails.ph}
                     </li>
             
