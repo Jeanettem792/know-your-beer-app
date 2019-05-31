@@ -5,19 +5,15 @@ import './Details.css';
 class Details extends Component{
 state ={
     fullDetails:null
-
 }
 componentDidMount(){
-    console.log("beer" + this.props.match.params.id)
-    console.log(this.state.fullDetails);
     if(this.props.match.params.id){
-        console.log(this.state.fullDetails);
         if(!this.state.fullDetails ||(this.state.fullDetails && this.state.fullDetails.id !== this.props.match.params.id)){
-axios.get('https://api.punkapi.com/v2/beers/' + this.props.match.params.id)
-    .then(response => {
-        this.setState({fullDetails: response.data[0]});
-        console.log(this.state.fullDetails.id);
-    });
+            axios.get('https://api.punkapi.com/v2/beers/' + this.props.match.params.id)
+        .then(response => {
+            this.setState({fullDetails: response.data[0]});
+       
+        });
         }
 }
 }
@@ -35,26 +31,33 @@ render(){
         beer = (
             <div>
                 <h1 className="BeerCenter">{this.state.fullDetails.name}</h1>
-           <img src={this.state.fullDetails.image_url}/>
+                <img src={this.state.fullDetails.image_url}/>
             
-            <h3 className="BeerCenter">{this.state.fullDetails.tagline}</h3>
-            <ul>
-                <li><h5>Brewed:</h5>  
-            {this.state.fullDetails.first_brewed}</li>
-            <li><h5>Description:</h5>
-            {this.state.fullDetails.description}</li>
-            <li><h5>FullDetails:</h5>{this.state.fullDetails.ph}</li>
+                <h3 className="BeerCenter">{this.state.fullDetails.tagline}</h3>
+                <ul>
+                    <li>
+                        <h5>Brewed:</h5>  
+                        {this.state.fullDetails.first_brewed}
+                    </li>
+                    <li>
+                        <h5>Description:</h5>
+                        {this.state.fullDetails.description}
+                    </li>
+                    <li>
+                        <h5>FullDetails:</h5>
+                        {this.state.fullDetails.ph}
+                    </li>
             
-            </ul>
+                 </ul>
             </div>
         );
     }
      
-return(
-    <div>
-{beer}
-</div>
-);
+    return(
+        <div>
+            {beer}
+        </div>
+    );
 
 
 
