@@ -5,6 +5,7 @@ import { CardContent, CardActionArea } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 const beer = (props) =>(
+    
 <Grid>
 <Card >
 <div>              

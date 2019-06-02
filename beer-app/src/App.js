@@ -9,29 +9,20 @@ import {Route, Link} from 'react-router-dom';
 import Details from './Details/Details';
 import Toolbar from './Toolbar/Toolbar';
 import Grid from '@material-ui/core/Grid';
-
+import {connect} from 'react-redux';
+import{getBeers, addFavourites} from './store/actions/actions';
+import * as actions from './store/actions/actions';
 class App extends Component{
   state={  
-      beers:[],
+      
       beerSelected: [],
       selectedBeerId: null
   };
   
   componentDidMount(){
-    if(this.state.beers.length<1){
-        axios.get('https://api.punkapi.com/v2/beers')
-        .then(response =>{
-      const beers = response.data.slice();
-      const updatedBeer = beers.map( beer =>{
-        return{
-         ...beer,
-         favourited:false,
-         buttonDes: "add"
-        }
-      });
-     this.setState({beers: updatedBeer});
-    });
-  }
+    
+   this.loadBeers();
+
 }   
 
   addToFavourite(beer){
@@ -49,33 +40,38 @@ class App extends Component{
         beer.favourited = !beer.favourited;
   }
   
-
+ loadBeers(){
+    this.props.onGetBeers();
+ }
  render() {
-   const beersSelected =this.state.beerSelected.map((beer)=>{
+   const beersSelected =this.props.beersSelected && this.props.beersSelected.length>0?this.props.beersSelected.map((beer)=>{
     return <FavouriteBeer
               key={beer.id}
               name={beer.name}
               favourited={beer.favourited}
-              click = {()=>this.addToFavourite(beer,beer.id)}
+              click = {()=>this.props.onAddFavourites(beer)}
               buttonDes={beer.buttonDes}>remove from Fav</FavouriteBeer>
-            });
+            }):null;
   
-
-    const beers =this.state.beers.map((beer)=>{
+            
+    const beers =this.props.beers.length>0?this.props.beers.map((beer)=>{
+      
       return( 
-        <Grid item key={beer.id} xs={12} sm={6} md={4} key={beer.id}>
+        
+        <Grid item key={beer.id} xs={12} sm={6} md={4}>
           <Beer
             name={beer.name}
-            click = {()=>this.addToFavourite(beer,beer.id)}
+            click = {()=>this.props.onAddFavourites(beer)}
             favourited={beer.favourited}
             buttonDes={beer.buttonDes}
             image={beer.image_url}> 
               <Link style={{ textDecoration: 'none', color:'black'}} to={'/details/' + beer.id} key={beer.key} >Details</Link>
           </Beer>
+          
     </Grid>
     );
 }
-);
+):null;
   return(
     <div className="app">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -89,4 +85,21 @@ class App extends Component{
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return{
+      beersSelected: state.beersSelected,
+      beers: state.beers,
+      beer: state.beer
+  };
+};
+
+  const mapDispatchToProps = dispatch =>{
+    
+    return{
+      onGetBeers:()=>dispatch(getBeers()),
+      onAddFavourites: (beer)=>dispatch(actions.addFavourites(beer))
+    };
+  };
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
