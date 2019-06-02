@@ -1,6 +1,4 @@
 import axios from 'axios';
-import dispatch from 'redux-thunk';
-
 export const GETBEERS = "GETBEERS";
 export const ADDFAVOURITES = "ADDFAVOURITES";
 export const saveResult = (beersResponse) => { 

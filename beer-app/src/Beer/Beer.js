@@ -1,7 +1,7 @@
 import React from 'react';
 import './Beer.css'
 import Card from '@material-ui/core/Card';
-import { CardContent, CardActionArea } from '@material-ui/core';
+import { CardContent} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
 const beer = (props) =>(

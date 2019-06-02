@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import  Beer from '../Beer/Beer';
 import axios from 'axios';
 import './Details.css';
 class Details extends Component{
@@ -20,14 +19,8 @@ componentDidMount(){
 
 
 render(){
-    const style={
-        display: 'block',
-    margin: 'auto',
-    align: 'center',
-      }
     let beer = null;
     if (this.state.fullDetails){
-        console.log("beer" + this.props.id);
         beer = (
             <div>
                 <h1 className="BeerCenter">{this.state.fullDetails.name}</h1>
